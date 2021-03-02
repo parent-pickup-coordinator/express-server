@@ -3,10 +3,13 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+app.use(cors());
 const morgan = require('morgan');
 require('./models/student');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student');
+
+//Access-Control-Allow-Origin: *;
 
 
 //middleware
@@ -16,7 +19,7 @@ const apiRoutes = require('./routes/apiRoutes.js');
 const logger = require('./middleware/logger.js');
 
 //App middleware
-app.use(cors()); 
+//app.use(cors()); 
 app.use(morgan('dev'));
 
 app.use(express.json());
