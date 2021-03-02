@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+app.use(cors()); //moved from below
 const morgan = require('morgan');
 require('./models/student');
 const mongoose = require('mongoose');
@@ -16,7 +17,7 @@ const apiRoutes = require('./routes/apiRoutes.js');
 const logger = require('./middleware/logger.js');
 
 //App middleware
-app.use(cors());
+//app.use(cors()); //Simon moved up 3/2/21 per Nathan suggestion
 app.use(morgan('dev'));
 
 app.use(express.json());
