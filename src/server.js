@@ -3,20 +3,23 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-app.use(cors());
+//app.use(cors());
 const morgan = require('morgan');
 require('./models/student');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student');
-
-//Access-Control-Allow-Origin: *;
-
 
 //middleware
 const errorHandler = require('../error-handlers/500.js');
 const notFound = require('../error-handlers/404.js');
 const apiRoutes = require('./routes/apiRoutes.js');
 const logger = require('./middleware/logger.js');
+
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+}
+app.use(cors(corsOptions));
 
 //App middleware
 //app.use(cors()); 
