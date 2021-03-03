@@ -1,14 +1,13 @@
 'use strict';
 
 const express = require('express');
-const app = express();
 const cors = require('cors');
-app.use(cors()); //moved from below
+const app = express();
+//app.use(cors());
 const morgan = require('morgan');
 require('./models/student');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student');
-
 
 //middleware
 const errorHandler = require('../error-handlers/500.js');
@@ -16,8 +15,14 @@ const notFound = require('../error-handlers/404.js');
 const apiRoutes = require('./routes/apiRoutes.js');
 const logger = require('./middleware/logger.js');
 
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+}
+app.use(cors(corsOptions));
+
 //App middleware
-//app.use(cors()); //Simon moved up 3/2/21 per Nathan suggestion
+//app.use(cors()); 
 app.use(morgan('dev'));
 
 app.use(express.json());
