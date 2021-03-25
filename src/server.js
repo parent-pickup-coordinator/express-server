@@ -13,6 +13,7 @@ const errorHandler = require('../error-handlers/500.js');
 const notFound = require('../error-handlers/404.js');
 const apiRoutes = require('./routes/apiRoutes.js');
 const logger = require('./middleware/logger.js');
+const authRoutes = require('./auth/routes.js');
 
 //App middleware
 app.use(cors()); 
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.get('/', (req, res) => {
 //   console.log('routes connected');
 // })
+app.use(authRoutes);
 app.use('/student', apiRoutes);
 
 app.use(logger);
