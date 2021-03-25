@@ -4,18 +4,20 @@ const express = require('express');
 const router = express.Router();
 const Collection = require('../models/dataCollection');
 const student = new Collection();
-console.log('made it to the routes page');
-console.log('this is the collection', Collection);
-console.log('this is the student', student);
+const bearerAuth = require('../middleware/bearer.js');
+const permissions = require('../middleware/acl.js');
+// console.log('made it to the routes page');
+// console.log('this is the collection', Collection);
+// console.log('this is the student', student);
 
 
-console.log('Made it to API routes page!');
+// console.log('Made it to API routes page!');
 
-router.get('/', handleGetAll);
-router.get('/:id', handleGetOne);
-router.post('/', handleAdd);
-router.put('/:id', handleUpdate);
-router.delete('/:id', handleDelete);
+router.get('/', bearerAuth, permissions('read'), handleGetAll);
+router.get('/:id', bearerAuth, permissions('read'), handleGetOne);
+router.post('/', bearerAuth, permissions('create'), handleAdd);
+router.put('/:id', bearerAuth, permissions('update'), handleUpdate);
+router.delete('/:id', bearerAuth, permissions('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   console.log('made it in the get all function');
